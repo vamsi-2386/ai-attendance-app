@@ -3,24 +3,24 @@ from src.database.db import enroll_employee_to_subject, get_subject_by_code, is_
 import time
 
 
-@st.dialog("Enroll in Subject")
+@st.dialog("Join Project")
 def enroll_dialog():
-    st.write('Enter the subject code provided by your company to enroll')
-    join_code = st.text_input('Subject Code', placeholder='Eg. CS101')
+    st.write('Enter the project code provided by your company to join')
+    join_code = st.text_input('Project Code', placeholder='Eg. PRJ101')
 
-    if st.button('Enroll now', type='primary', width='stretch'):
+    if st.button('Join now', type='primary', width='stretch'):
         if join_code:
             subject = get_subject_by_code(join_code)
             if subject:
                 employee_id = st.session_state.employee_data['employee_id']
                 if is_employee_enrolled(employee_id, subject['subject_id']):
-                    st.warning('You are already enrolled in this program')
+                    st.warning('You have already joined this project')
                 else:
                     enroll_employee_to_subject(employee_id, subject['subject_id'])
-                    st.success('Successfully enrolled!')
+                    st.success('Successfully joined!')
                     time.sleep(1)
                     st.rerun()
             else:
-                st.error('Subject code not found!')
+                st.error('Project code not found!')
         else:
-            st.warning('Please enter a subject code')
+            st.warning('Please enter a project code')

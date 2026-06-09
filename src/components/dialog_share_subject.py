@@ -4,7 +4,7 @@ import segno
 import io
 
 
-@st.dialog("Share Class Link")
+@st.dialog("Share Project Link")
 def share_subject_dialog(subject_name, subject_code):
     app_domain = "snapclass-main.streamlit.app"
     join_url = f"{app_domain}/?join-code={subject_code}"
@@ -27,6 +27,6 @@ def share_subject_dialog(subject_name, subject_code):
 
     with col2:
         st.markdown('### Scan to Join')
-        st.image(out.getvalue(), caption='QRCODE for class joining')
+        st.image(out.getvalue(), caption='QR Code for project joining')
 
         

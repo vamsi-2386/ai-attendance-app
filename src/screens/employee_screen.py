@@ -32,16 +32,16 @@ def employee_dashboard():
 
     c1, c2 =st.columns(2)
     with c1:
-        st.header('Your Enrolled Subjects')
+        st.header('Your Active Projects')
     with c2:
-        if st.button('Enroll in Subject', type='primary', width='stretch'):
+        if st.button('Join Project', type='primary', width='stretch'):
             enroll_dialog()
 
 
     st.divider()
 
 
-    with st.spinner('Loading your enrolled subjects..'):
+    with st.spinner('Loading your active projects..'):
         subjects = get_employee_subjects(employee_id)
         logs = get_employee_attendance(employee_id)
 
@@ -67,9 +67,9 @@ def employee_dashboard():
 
         stats = stats_map.get(sid,{"total":0, "attended": 0} )
         def unenroll_button():
-                if st.button("Unenroll from tihs course", type='tertiary', width='stretch', icon=':material/delete_forever:'):
+                if st.button("Leave this project", type='tertiary', width='stretch', icon=':material/delete_forever:'):
                     unenroll_employee_to_subject(employee_id, sid)
-                    st.toast(f'Unenrolled from {sub['name']} successfully!')
+                    st.toast(f"Left {sub['name']} successfully!")
                     st.rerun()
 
         with cols[i % 2]:
@@ -145,7 +145,7 @@ def employee_screen():
             new_name = st.text_input("Enter your name", placeholder='E.g. Hamza Rizvi')
 
             st.subheader('Optional : Voice Enrollment')
-            st.info("Enroll your for voice only attendance")
+            st.info("Register for voice only attendance")
 
 
             audio_data = None

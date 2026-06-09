@@ -3,19 +3,19 @@ from src.database.db import create_subject
 
 
 
-@st.dialog("Create New Subject")
+@st.dialog("Create New Project")
 def create_subject_dialog(teacher_id):
-    st.write("Enter the details of new subject")
-    sub_id = st.text_input("Subject Code", placeholder="CS101")
-    sub_name = st.text_input("Subject Name", placeholder="Introduction to Computer Science")
+    st.write("Enter the details of new project")
+    sub_id = st.text_input("Project Code", placeholder="PRJ101")
+    sub_name = st.text_input("Project Name", placeholder="AI Development")
     sub_section = st.text_input("Section", placeholder="A")
 
 
-    if st.button("Create Subject Now", type='primary', width='stretch'):
+    if st.button("Create Project Now", type='primary', width='stretch'):
         if sub_id and sub_name and sub_section:
             try:
                 create_subject(sub_id, sub_name, sub_section, teacher_id)
-                st.toast("Subject Created Succesfully!")
+                st.toast("Project Created Succesfully!")
                 st.rerun()
             except Exception as e:
                 st.error(f"Error: {str(e)}")

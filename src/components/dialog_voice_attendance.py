@@ -10,14 +10,14 @@ from datetime import datetime
 def voice_attendance_dialog(selected_subject_id):
     st.write('Record audio of employees saying "I am present". The AI will recognize them.')
 
-    audio_data = st.audio_input("Record classroom audio")
+    audio_data = st.audio_input("Record meeting audio")
 
     if st.button('Analyze Audio', width='stretch', type='primary'):
         with st.spinner('Processing audio data...'):
             enrolled_employees = get_enrolled_employees_for_subject(selected_subject_id)
 
             if not enrolled_employees:
-                st.warning('No employees enrolled in this course')
+                st.warning('No employees assigned to this project')
                 return
 
             candidates_dict = {
@@ -26,7 +26,7 @@ def voice_attendance_dialog(selected_subject_id):
             }
 
             if not candidates_dict:
-                st.error('No enrolled employees have voice profiles registered')
+                st.error('No assigned employees have voice profiles registered')
                 return
 
             audio_bytes = audio_data.read()

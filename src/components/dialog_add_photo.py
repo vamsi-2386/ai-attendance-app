@@ -4,7 +4,7 @@ from PIL import Image
 
 @st.dialog("Capture or upload photos")
 def add_photos_dialog():
-    st.write('Add classroom photos to scan for attendance')
+    st.write('Add meeting photos to scan for attendance')
 
     if 'photo_tab' not in st.session_state:
         st.session_state.photo_tab = 'camera'

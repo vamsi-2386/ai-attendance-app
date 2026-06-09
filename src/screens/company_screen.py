@@ -63,7 +63,7 @@ def company_dashboard():
 
     with tab2:
         type2 = "primary" if st.session_state.current_company_tab == 'manage_subjects' else "tertiary"
-        if st.button('Manage Subjects', type=type2, width='stretch', icon=':material/book_ribbon:'):
+        if st.button('Manage Projects', type=type2, width='stretch', icon=':material/book_ribbon:'):
             st.session_state.current_company_tab = 'manage_subjects'
             st.rerun()
 
@@ -99,7 +99,7 @@ def company_tab_take_attendance():
     subjects = get_company_subjects(company_id)
 
     if not subjects:
-        st.warning('You havent created any subjects yet! Please create one to begin!')
+        st.warning('You havent created any projects yet! Please create one to begin!')
         return
     
     subject_options = {f"{s['name']} - {s['subject_code']}": s['subject_id'] for s in subjects}
@@ -107,7 +107,7 @@ def company_tab_take_attendance():
     col1, col2 = st.columns([3,1], vertical_alignment='bottom')
 
     with col1:
-        selected_subject_label = st.selectbox('Select Subject', options=list(subject_options.keys()))
+        selected_subject_label = st.selectbox('Select Project', options=list(subject_options.keys()))
 
     with col2:
         if st.button('Add Photos', type='primary', icon=':material/photo_prints:', width='stretch'):
@@ -136,7 +136,7 @@ def company_tab_take_attendance():
     with c2:
         
         if st.button('Run Face Analysis', width='stretch', type='secondary', icon=':material/analytics:', disabled=not has_photos):
-            with st.spinner('Deep scanning classroom photos...'):
+            with st.spinner('Deep scanning meeting photos...'):
                 all_detected_ids = {}
 
                 for idx, img in enumerate(st.session_state.attendance_images):
@@ -153,7 +153,7 @@ def company_tab_take_attendance():
                 enrolled_employees = get_enrolled_employees_for_subject(selected_subject_id)
 
                 if not enrolled_employees:
-                    st.warning('No employees enrolled in this course')
+                    st.warning('No employees assigned to this project')
                 else:
 
                     results, attendance_to_log = [], []
@@ -198,10 +198,10 @@ def company_tab_manage_subjects():
     company_id = st.session_state.company_data['company_id']
     col1, col2 = st.columns(2)
     with col1:
-        st.header('Manage Subjects', width='stretch')
+        st.header('Manage Projects', width='stretch')
 
     with col2:
-        if st.button('Create New Subject', width='stretch'):
+        if st.button('Create New Project', width='stretch'):
             create_subject_dialog(company_id)
 
 
@@ -226,7 +226,7 @@ def company_tab_manage_subjects():
             footer_callback=share_btn
         )
     else:
-        st.info("NO SUBJECTS FOUND. CREATE ONE ABOVE")
+        st.info("NO PROJECTS FOUND. CREATE ONE ABOVE")
 
 
 def company_tab_attendance_records():
@@ -247,8 +247,8 @@ def company_tab_attendance_records():
         data.append({
             "ts_group": ts.split(".")[0] if ts else None,
             "Time": datetime.fromisoformat(ts).strftime("%Y-%m-%d %I:%M %p") if ts else "N'A",
-            "Subject": r['subjects']['name'],
-            "Subject Code":r['subjects']['subject_code'],
+            "Project": r['subjects']['name'],
+            "Project Code":r['subjects']['subject_code'],
             "is_present": bool(r.get('is_present', False))
         })
 
@@ -258,7 +258,7 @@ def company_tab_attendance_records():
 
 
     summary = (
-        df.groupby(['ts_group', 'Time', 'Subject', 'Subject Code'])
+        df.groupby(['ts_group', 'Time', 'Project', 'Project Code'])
         .agg(
             Present_Count = ('is_present', 'sum'),
             Total_Count =('is_present', 'count')
@@ -272,7 +272,7 @@ def company_tab_attendance_records():
     )
 
     display_df = ( summary.sort_values(by='ts_group' ,ascending=False)
-                  [['Time', 'Subject', 'Subject Code', 'Attendance Stats']]
+                  [['Time', 'Project', 'Project Code', 'Attendance Stats']]
                   )
     
     st.dataframe(display_df, width='stretch', hide_index=True)
