@@ -1,0 +1,29 @@
+streamlit
+
+# Utilities
+numpy
+pandas
+
+# Face Recognition
+scikit-learn
+dlib-bin; sys_platform == 'win32'
+dlib; sys_platform != 'win32'
+git+https://github.com/ageitgey/face_recognition_models
+setuptools<70.0.0
+
+# Password hashing
+bcrypt
+
+# QR codes
+segno
+
+# Image handling
+pillow
+
+# Voice recognition
+librosa
+webrtcvad-wheels; sys_platform == 'win32'
+webrtcvad; sys_platform != 'win32'
+resemblyzer; sys_platform != 'win32'
+
+# Note: On Windows, resemblyzer is installed manually via install.ps1 to bypass build errors.
