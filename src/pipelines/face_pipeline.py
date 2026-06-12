@@ -6,7 +6,7 @@ import face_recognition_models
 from sklearn.svm import SVC
 import streamlit as st
 
-from src.database.db import get_all_employees
+from src.database.db import get_all_employees, get_all_employees_for_company
 
 
 @st.cache_resource
@@ -37,13 +37,19 @@ def get_face_embeddings(image_np):
         encodings.append(np.array(face_descriptor))
     return encodings
 
+from src.database.db import get_all_employees, get_all_employees_for_company, get_enrolled_employees_for_subject
+
 @st.cache_resource
-def get_trained_model():
+def get_trained_model(company_id=None, subject_id=None):
     X = []
     y = []
 
-
-    employee_db = get_all_employees()
+    if subject_id:
+        employee_db = get_enrolled_employees_for_subject(subject_id)
+    elif company_id:
+        employee_db = get_all_employees_for_company(company_id)
+    else:
+        employee_db = get_all_employees()
 
     if not employee_db:
         return None
@@ -69,16 +75,14 @@ def get_trained_model():
 
 def train_classifier():
     st.cache_resource.clear()
-    model_data = get_trained_model()
-    return bool(model_data)
+    return True
 
-def predict_attendance(class_image_np):
+def predict_attendance(class_image_np, company_id=None, subject_id=None):
     encodings = get_face_embeddings(class_image_np)
 
     detected_employee = {}
 
-
-    model_data = get_trained_model()
+    model_data = get_trained_model(company_id, subject_id)
 
     if not model_data:
         return detected_employee, [], len(encodings)

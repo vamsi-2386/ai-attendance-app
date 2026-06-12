@@ -6,8 +6,6 @@ from src.screens.company_screen import company_screen
 from src.screens.employee_screen import employee_screen
 from src.database.init_db import init_db
 
-from src.components.dialog_auto_enroll import auto_enroll_dialog
-
 def main():
     init_db()
     st.set_page_config(
@@ -27,12 +25,4 @@ def main():
         case None:
             home_screen()
 
-
-    join_code = st.query_params.get('join-code')
-    if join_code:
-        if st.session_state.login_type != 'employee':
-            st.session_state.login_type = 'employee'
-            st.rerun()
-        if st.session_state.get('is_logged_in') and st.session_state.get('user_role') == 'employee':
-            auto_enroll_dialog(join_code)
 main()

@@ -1,6 +1,6 @@
 import streamlit as st
 from src.pipelines.voice_pipeline import process_bulk_audio
-from src.database.db import get_enrolled_employees_for_subject
+from src.database.db import get_all_employees_for_company
 from src.components.dialog_attendance_results import show_attendance_result
 import pandas as pd
 from datetime import datetime
@@ -14,10 +14,11 @@ def voice_attendance_dialog(selected_subject_id):
 
     if st.button('Analyze Audio', width='stretch', type='primary'):
         with st.spinner('Processing audio data...'):
-            enrolled_employees = get_enrolled_employees_for_subject(selected_subject_id)
+            company_id = st.session_state.company_data['company_id']
+            enrolled_employees = get_all_employees_for_company(company_id)
 
             if not enrolled_employees:
-                st.warning('No employees assigned to this project')
+                st.warning('No employees registered in this company!')
                 return
 
             candidates_dict = {

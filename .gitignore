@@ -1,5 +1,7 @@
+﻿app.py
+requirements.txt
+make_static.py
 __pycache__/
 *.pyc
-src/database/*.db
-.env
-.streamlit/secrets.toml
+templates/
+vercel.json

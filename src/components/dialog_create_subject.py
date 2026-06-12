@@ -4,17 +4,15 @@ from src.database.db import create_subject
 
 
 @st.dialog("Create New Project")
-def create_subject_dialog(teacher_id):
+def create_subject_dialog(company_id):
     st.write("Enter the details of new project")
-    sub_id = st.text_input("Project Code", placeholder="PRJ101")
-    sub_name = st.text_input("Project Name", placeholder="AI Development")
-    sub_section = st.text_input("Section", placeholder="A")
-
+    sub_id = st.text_input("Project Code *", placeholder="PRJ101")
+    sub_name = st.text_input("Project Name *", placeholder="AI Development")
 
     if st.button("Create Project Now", type='primary', width='stretch'):
-        if sub_id and sub_name and sub_section:
+        if sub_id and sub_name:
             try:
-                create_subject(sub_id, sub_name, sub_section, teacher_id)
+                create_subject(sub_id, sub_name, "", company_id)
                 st.toast("Project Created Succesfully!")
                 st.rerun()
             except Exception as e:
