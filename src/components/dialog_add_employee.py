@@ -2,7 +2,7 @@ import streamlit as st
 from PIL import Image
 import numpy as np
 from src.database.db import create_employee, assign_employee_to_project, get_company_subjects
-from src.pipelines.face_pipeline import get_face_embeddings, train_classifier
+from src.pipelines.face_pipeline import get_face_embeddings
 
 @st.dialog('Register Employee Manually')
 def add_employee_dialog(company_id):
@@ -22,7 +22,7 @@ def add_employee_dialog(company_id):
             help="Select the projects this employee should be a part of."
         )
         
-        submit_btn = st.form_submit_button("Proceed to Face Registration", type="primary", width="stretch")
+        submit_btn = st.form_submit_button("Proceed to Face Registration", type="primary", use_container_width=True)
         
     if submit_btn:
         employee_code = employee_code.strip() if employee_code else ""
@@ -45,7 +45,7 @@ def add_employee_dialog(company_id):
         photo_source = st.camera_input("Capture Employee Face")
         
         if photo_source:
-            if st.button("Finalize Registration", type="primary", width="stretch"):
+            if st.button("Finalize Registration", type="primary", use_container_width=True):
                 with st.spinner("Analyzing face features..."):
                     img = np.array(Image.open(photo_source))
                     encodings = get_face_embeddings(img)
@@ -67,7 +67,6 @@ def add_employee_dialog(company_id):
                             for proj_id in emp_data['projects']:
                                 assign_employee_to_project(new_emp_id, proj_id)
                                 
-                            train_classifier()
                             st.toast(f"Employee {emp_data['name']} successfully registered!")
                             del st.session_state.admin_registering_employee
                             st.rerun()

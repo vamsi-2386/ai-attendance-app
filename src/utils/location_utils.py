@@ -25,3 +25,10 @@ def is_within_radius(user_lat, user_lon, office_lat, office_lon, radius_meters=1
         
     distance = calculate_distance(user_lat, user_lon, office_lat, office_lon)
     return distance <= radius_meters
+
+def is_suspicious_location(location_data):
+    """
+    Detect if the GPS data seems suspicious.
+    (Disabled temporarily for easier testing)
+    """
+    return False

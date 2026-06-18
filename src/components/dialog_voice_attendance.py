@@ -12,7 +12,7 @@ def voice_attendance_dialog(selected_subject_id):
 
     audio_data = st.audio_input("Record meeting audio")
 
-    if st.button('Analyze Audio', width='stretch', type='primary'):
+    if st.button('Analyze Audio', use_container_width=True, type='primary'):
         with st.spinner('Processing audio data...'):
             company_id = st.session_state.company_data['company_id']
             enrolled_employees = get_all_employees_for_company(company_id)

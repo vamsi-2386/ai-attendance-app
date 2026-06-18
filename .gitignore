@@ -1,7 +1,32 @@
-﻿app.py
-requirements.txt
-make_static.py
+# Environments
+.env
+src/database/.env
+.streamlit/secrets.toml
+venv/
+env/
+.venv/
+
+# Python cache
 __pycache__/
 *.pyc
-templates/
-vercel.json
+*.pyo
+*.pyd
+
+# Databases and data
+*.db
+*.sqlite3
+attendance.db
+app.db
+face_match_report.csv
+
+# User/Test uploads
+employee_photos/
+test_images/
+
+# Scratch and test files
+scratch_*.py
+
+# OS / IDE
+.DS_Store
+.vscode/
+.idea/

@@ -31,17 +31,19 @@ def main():
     
     # 1. Create a company
     print("Creating company...")
-    company = create_company("techtitans", "password123", "Tech Titans Inc")
-    company_id = company[0]["username"] # wait, create_company returns username, name, company_invite_code. We need ID.
-    # We should get the ID from DB
+    from src.database.db import check_company_exists
     from src.database.config import get_db_connection
     conn = get_db_connection()
     cursor = conn.cursor()
+    
+    if not check_company_exists("techtitans"):
+        company = create_company("techtitans", "password123", "Tech Titans Inc")
+    
     cursor.execute("SELECT id, company_invite_code FROM companys WHERE username='techtitans'")
     row = cursor.fetchone()
     company_id = row['id']
     invite_code = row['company_invite_code']
-    print(f"Company created! Invite Code: {invite_code}")
+    print(f"Company ready! Invite Code: {invite_code}")
     
     # 2. Create a project
     print("Creating project...")

@@ -1,0 +1,21 @@
+def is_employee_enrolled(employee_id, subject_id):
+    conn = get_db_connection()
+    try:
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM project_employees WHERE employee_id = ? AND subject_id = ?", (employee_id, subject_id))
+        row = cursor.fetchone()
+        return row is not None
+    finally:
+        conn.close()
+
+def enroll_employee_to_subject(employee_id, subject_id):
+    assign_employee_to_project(employee_id, subject_id)
+
+def unenroll_employee_from_subject(employee_id, subject_id):
+    conn = get_db_connection()
+    try:
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM project_employees WHERE employee_id = ? AND subject_id = ?", (employee_id, subject_id))
+        conn.commit()
+    finally:
+        conn.close()

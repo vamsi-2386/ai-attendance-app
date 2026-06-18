@@ -1,8 +1,10 @@
 streamlit
+supabase
 
 # Utilities
 numpy
 pandas
+fpdf2
 
 # Face Recognition
 scikit-learn
@@ -23,7 +25,9 @@ pillow
 # Voice recognition
 librosa
 webrtcvad-wheels; sys_platform == 'win32'
-webrtcvad; sys_platform != 'win32'
-resemblyzer; sys_platform != 'win32'
+# webrtcvad; sys_platform != 'win32'
+# resemblyzer; sys_platform != 'win32'
 
 # Note: On Windows, resemblyzer is installed manually via install.ps1 to bypass build errors.
+streamlit-folium
+folium

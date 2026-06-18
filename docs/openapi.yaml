@@ -1,0 +1,64 @@
+openapi: 3.0.3
+info:
+  title: HRMS Phase 4 Enterprise API
+  description: OpenAPI definitions for the Supabase Postgres Database tables and REST APIs.
+  version: 1.4.0
+servers:
+  - url: https://your-project-ref.supabase.co/rest/v1
+paths:
+  /employees:
+    get:
+      summary: Get all employees
+      responses:
+        '200':
+          description: A list of employees
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Employee'
+  /attendance_logs:
+    get:
+      summary: Get attendance records
+      responses:
+        '200':
+          description: A list of attendance logs
+  /offices:
+    post:
+      summary: Create a new office location
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Office'
+      responses:
+        '201':
+          description: Created
+components:
+  schemas:
+    Employee:
+      type: object
+      properties:
+        employee_id:
+          type: integer
+        name:
+          type: string
+        daily_rate:
+          type: number
+        role:
+          type: string
+    Office:
+      type: object
+      properties:
+        id:
+          type: integer
+        office_name:
+          type: string
+        latitude:
+          type: number
+        longitude:
+          type: number
+        radius:
+          type: integer
